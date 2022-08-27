@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- https://a-three.work/codenote/vue-js/vue-js-はじめに/ -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.8/dist/vue.js"></script>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <main>
+        <h1>
+            <a href="https://a-three.work/codenote/vue-js/vue-js-はじめに/index.php#toc2">宣言的レンダリング</a>
+        </h1>
+        <div id="app">
+            <h2>宣言的にデータを DOM に描画</h2>
+            <p class="border">
+                {{ message }}
+            </p>
+            <p>
+                コンソールで
+                <pre><code>app.message = 'データを変更しました!'</code></pre>
+                と入力してみましょう。描画が更新されるのが確認できるでしょう。
+            </p>
+        </div>
+        <script>
+            const app = new Vue({
+                el: '#app',
+                data: {
+                    message: 'ここのメッセージが変わります!'
+                }
+            })
+            // app.message = 'データを変更しました!';
+        </script>
+        
+        <div id="app-2">
+            <h2>v-bind</h2>
+            <p v-bind:title="message" class="border">
+                ここにマウスをのせてしばらくすると、title属性のメッセージが表示されます。
+            </p>
+            <p>
+                コンソールで
+                <pre><code>app2.message = '新しいメッセージ'</code></pre>
+                と入力してみましょう。束縛されたHTML（このケースでは title 属性）が更新されるのが確認できるでしょう。
+            </p>
+        </div>
+        <script>
+            var app2 = new Vue({
+                el: '#app-2',
+                data: {
+                    message: 'このページを開いた時間：' + new Date().toLocaleString()
+                }
+            })
+        </script>
+
+        <h1>
+            <a href="https://a-three.work/codenote/vue-js/vue-js-はじめに/index.php#toc3">条件分岐とループ</a>
+        </h1>
+        <div id="app-3">
+            <h2>v-if</h2>
+            <p v-if="seen" class="border">trueなのでこの文が見えます。
+            </p>
+            <p>
+                コンソールで
+                <pre><code>app3.seen = false</code></pre>
+                と入力してみましょう。メッセージが消えるはずです。
+            </p>
+        </div>
+        <script>
+            var app3 = new Vue({
+                el: '#app-3',
+                data: {
+                    seen: true
+                }
+            })
+        </script>
+        <div id="app-4">
+            <h2>v-for</h2>
+            <ol>
+                <li v-for="todo in todos">
+                    {{ todo.text }}
+                </li>
+            </ol>
+            <p>
+                コンソールで
+                <pre><code>app4.todos.push({ text: 'New item' })</code></pre>
+                と入力してみましょう。リストに新しいアイテムが追加されたはずです。
+            </p>
+        </div>
+        <script>
+            var app4 = new Vue({
+                el: '#app-4',
+                data: {
+                    todos: [
+                        { text: 'v-forディレクティブを使えば' },
+                        { text: 'アイテムのリストを' },
+                        { text: '配列内のデータを使って表示することができます' }
+                    ]
+                }
+            })
+        </script>
+
+        <h1>
+            <a href="https://a-three.work/codenote/vue-js/vue-js-はじめに/index.php#toc4">ユーザー入力の制御</a>
+        </h1>
+        <div id="app-5">
+            <h2>v-on</h2>
+            <p>{{ message }}</p>
+            <button v-on:click="reverseMessage">Reverse Message</button>
+        </div>
+        <script>
+            var app5 = new Vue({
+                el: '#app-5',
+                data: {
+                    message: 'v-on ディレクティブを使ってイベントリスナを加え、Vue インスタンスのメソッドを呼び出すことができます。'
+                },
+                methods: {
+                    reverseMessage: function () {
+                    this.message = this.message.split('').reverse().join('')
+                    }
+                }
+            })
+        </script>
+        <div id="app-6">
+            <h2>v-model</h2>
+            <p>{{ message }}</p>
+            <input v-model="message">
+        </div>
+        <script>
+            var app6 = new Vue({
+                el: '#app-6',
+                data: {
+                    message: 'HTMLからデータ変更'
+                }
+            })
+        </script>
+
+        <h1>
+            <a href="https://a-three.work/codenote/vue-js/vue-js-はじめに/index.php#toc5">ユーザー入力の制御</a>
+        </h1>
+        <div id="app-7">
+            <h2>新しいコンポーネントを定義</h2>
+            <ol>
+                <todo-item
+                 v-for="abc in groceryList"
+                 v-bind:defgh="abc" 
+                 v-bind:key="abc.id"
+                ></todo-item>
+            </ol>
+        </div>
+        <script>
+            // 新しいコンポーネントを定義するとHTMLに<todo-item>のように独自要素を定義できるようになる
+            Vue.component('todo-item', {
+                // HTML側で v-bind:defgh= のような記述を可能にする
+                props: ['defgh'],
+                // props で定義した名前が変数として使える。propsで定義したもの（今回はdefgh）が、同じ変数名で値が受け取れるようになる。
+                template: '<li>{{ defgh.text }}</li>'
+            })
+            const app7 = new Vue({
+                el: '#app-7',
+                data: {
+                    groceryList: [
+                        { id: 0, text: 'Vegetables' },
+                        { id: 1, text: 'Cheese' },
+                        { id: 2, text: 'Whatever else humans are supposed to eat' }
+                    ]
+                }
+            })
+        </script>
+    </main>
+</body>
+</html>

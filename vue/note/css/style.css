@@ -1,0 +1,41 @@
+body {
+  margin: 0;
+  background: black;
+  color: white;
+}
+
+main {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+h1 {
+  margin: 10px;
+  width: 100vw;
+}
+h1 a {
+  color: white;
+}
+
+div {
+  background-color: #15533f;
+  padding: 30px;
+  margin: 10px;
+  max-width: 40vw;
+  min-width: 350px;
+}
+
+li {
+  padding: 10px 0;
+}
+
+code {
+  font-size: 1.25em;
+  background: rgba(0, 0, 0, 0.2392156863);
+  padding: 10px;
+}
+
+.border {
+  border: solid 1px;
+  padding: 10px;
+}/*# sourceMappingURL=style.css.map */
